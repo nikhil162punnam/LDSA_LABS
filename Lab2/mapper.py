@@ -1,20 +1,22 @@
+#!/usr/bin/env python3
+
+
 import sys
 import json
 
-unique_tweets = 0
 
 for line in sys.stdin:
-    try:
+    if len(line) != 1:
         each_tweet = json.loads(line)
-    except:
-        continue
-    word_list = {'han', 'hon', 'den', 'det', 'denna', 'denne', 'hen'}
-    word_count = {}
-    if not each_tweet['retweeted']:
-        unique_tweets += 1
-        text = each_tweet['text'].lower()
-        for eachword in word_list:
-            tcount =  text.count(eachword)
-            if tcount > 0:
-                word_count[eachword] = tcount
-    [print(wc,1) for wc in word_count]
+        word_list = {'han', 'hon', 'den', 'det', 'denna', 'denne', 'hen'}
+        word_count = {}
+        if not each_tweet['retweeted']:
+            text = each_tweet['text'].lower()
+            for eachword in word_list:
+                tcount =  text.count(eachword)
+                if tcount > 0:
+                    word_count[eachword] = tcount
+            if len(word_count) > 0:
+                for word in word_count:
+                    print('%s\t%s' % (word, 1))
+                print('%s\t%s' % ('unique',1))
