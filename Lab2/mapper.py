@@ -7,7 +7,10 @@ import json
 
 for line in sys.stdin:
     if len(line) != 1:
-        each_tweet = json.loads(line)
+        try:
+            each_tweet = json.loads(line)
+        except:
+            continue
         word_list = {'han', 'hon', 'den', 'det', 'denna', 'denne', 'hen'}
         word_count = {}
         if not each_tweet['retweeted']:
