@@ -16,10 +16,7 @@ for line in sys.stdin:
         if not each_tweet['retweeted']:
             text = each_tweet['text'].lower()
             for eachword in word_list:
-                tcount =  text.count(eachword)
-                if tcount > 0:
-                    word_count[eachword] = tcount
-            if len(word_count) > 0:
-                for word in word_count:
-                    print('%s\t%s' % (word, 1))
-                print('%s\t%s' % ('unique',1))
+                if eachword in text:
+                    print('%s\t%s' % (eachword, 1))
+            print('%s\t%s' % ('unique',1))
+                
