@@ -4,7 +4,6 @@
 import sys
 import json
 
-
 for line in sys.stdin:
     if len(line) != 1:
         try:
