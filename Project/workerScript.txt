@@ -1,0 +1,21 @@
+sudo sed -ie 's/nova.clouds.archive.ubuntu.com/se.archive.ubuntu.com/' /etc/apt/sources.list 
+sudo apt update
+sudo apt-get install -y openjdk-8-jdk
+for i in {1..255}; do echo "192.168.1.$i host-192-168-1-$i-ldsa" | sudo tee -a /etc/hosts; done
+for i in {1..255}; do echo "192.168.2.$i host-192-168-2-$i-ldsa" | sudo tee -a /etc/hosts; done
+sudo hostname host-$(hostname -I | awk '{$1=$1};1' | sed 's/\./-/'g)-ldsa ; hostname
+wget http://apache.mirrors.spacedump.net/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
+tar xvzf spark-2.4.3-bin-hadoop2.7.tgz 
+echo "export SPARK_HOME=~/spark-2.4.3-bin-hadoop2.7" >> ~/.bashrc
+source ~/.bashrc
+echo "export PYSPARK_PYTHON=python3" >> ~/.bashrc
+source ~/.bashrc
+sudo apt-get install -y git
+sudo apt-get install -y python3-pip
+python3 -m pip install pip
+sudo apt install -y jupyter-notebook
+python3 -m pip install pyspark==2.4.3 --user
+python3 -m pip install pandas --user
+python3 -m pip install matplotlib --user
+~/spark-2.4.3-bin-hadoop2.7/sbin/start-slave.sh spark://host-192-168-1-83-ldsa:7077
+~/spark-2.4.3-bin-hadoop2.7/sbin/start-shuffle-service.sh
